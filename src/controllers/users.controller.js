@@ -11,30 +11,35 @@ const router = Router();
 
 router.get("/", async (req, res) => {
   const users = await listUsers();
-  res.send(users);
+  if (!users)
+    res
+      .status(404)
+      .json({ status: "fail", errorMessage: "No data available." });
+  res.json(users);
 });
 
 router.get("/:id", async (req, res) => {
   const user = await getUserById(req.params.id);
-  if (!user) res.status(404).send({ errorMessage: "User not found!" });
-  res.send(user);
+  if (!user)
+    res.status(404).json({ status: "fail", errorMessage: "User not found!" });
+  res.json(user);
 });
 
 router.post("/", async (req, res) => {
   try {
     const user = await createUser(req.body);
-    res.status(201).send(user);
+    res.status(201).json({ status: "success", object: user });
   } catch (error) {
-    res.status(400).send(error);
+    res.status(400).json({ status: "fail", errorMessage: error.message });
   }
 });
 
 router.put("/:id", async (req, res) => {
   try {
     await updateUser(req.params.id, req.body);
-    res.send();
+    res.status(200).send();
   } catch (error) {
-    res.status(400).send(error);
+    res.status(400).json({ status: "fail", errorMessage: error.message });
   }
 });
 

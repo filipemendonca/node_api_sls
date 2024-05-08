@@ -1,0 +1,367 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Lumx API Test",
+    "description": "Manipulação de usuários e pedidos.",
+    "termsOfService": "",
+    "contact": {
+      "email": "filiperm15@gmail.com"
+    },
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:3000/api",
+      "description": "API Local"
+    }
+  ],
+  "paths": {
+    "/users": {
+      "get": {
+        "summary": "Lista todos os usuários",
+        "description": "Rota responsável por trazer todos os usuários do sistema.",
+        "tags": ["Users"],
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "$ref": "#components/schemas/Users"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No data available."
+          }
+        }
+      },
+      "post": {
+        "summary": "Inclui um novo usuário",
+        "description": "Rota responsável por incluir um novo usuário no sistema.",
+        "tags": ["Users"],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#components/schemas/Users"
+              },
+              "examples": {
+                "users": {
+                  "value": {
+                    "name": "Test",
+                    "email": "test@test.com"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#components/schemas/Users"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Error: Bad Request."
+          }
+        }
+      }
+    },
+    "/users/{id}": {
+      "get": {
+        "summary": "Busca usuário por Id.",
+        "description": "Rota responsável por trazer um usuário informando o Id.",
+        "tags": ["Users"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of user",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "$ref": "#components/schemas/Users"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No data available."
+          }
+        }
+      },
+      "put": {
+        "summary": "Atualiza usuário.",
+        "description": "Rota responsável por atualizar um usuário informando o seu Id.",
+        "tags": ["Users"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of user",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#components/schemas/Users"
+              },
+              "examples": {
+                "users": {
+                  "value": {
+                    "name": "Test",
+                    "email": "test@test.com"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Ok"
+          },
+          "400": {
+            "description": "Error: Bad Request."
+          }
+        }
+      },
+      "delete": {
+        "summary": "Deleta um usuário.",
+        "description": "Rota responsável por deletar um usuário informando seu Id.",
+        "tags": ["Users"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of user",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Ok"
+          }
+        }
+      }
+    },
+
+    "/orders": {
+      "get": {
+        "summary": "Lista todos os pedidos",
+        "description": "Rota responsável por trazer todos os pedidos do sistema.",
+        "tags": ["Orders"],
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "$ref": "#components/schemas/Orders"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No data available."
+          }
+        }
+      },
+      "post": {
+        "summary": "Inclui um novo pedido",
+        "description": "Rota responsável por incluir um novo pedido no sistema.",
+        "tags": ["Orders"],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#components/schemas/Orders"
+              },
+              "examples": {
+                "orders": {
+                  "value": {
+                    "description": "Test",
+                    "user_id": "663abdf4704330013cbc2fe7"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#components/schemas/Orders"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Error: Bad Request."
+          }
+        }
+      }
+    },
+    "/orders/{id}": {
+      "get": {
+        "summary": "Busca pedido por Id.",
+        "description": "Rota responsável por trazer um pedido informando o Id.",
+        "tags": ["Orders"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of order",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "$ref": "#components/schemas/Orders"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No data available."
+          }
+        }
+      },
+      "put": {
+        "summary": "Atualiza pedido.",
+        "description": "Rota responsável por atualizar um pedido informando o seu Id.",
+        "tags": ["Orders"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of order",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#components/schemas/Orders"
+              },
+              "examples": {
+                "users": {
+                  "value": {
+                    "name": "Test",
+                    "email": "test@test.com"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Ok"
+          },
+          "400": {
+            "description": "Error: Bad Request."
+          }
+        }
+      },
+      "delete": {
+        "summary": "Deleta um pedido.",
+        "description": "Rota responsável por deletar um pedido informando seu Id.",
+        "tags": ["Orders"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of order",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Ok"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Users": {
+        "type": "object",
+        "properties": {
+          "_id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          }
+        }
+      },
+      "Orders": {
+        "type": "object",
+        "properties": {
+          "_id": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "user_id": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}

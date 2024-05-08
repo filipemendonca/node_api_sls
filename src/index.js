@@ -3,6 +3,8 @@ import { configDotenv } from "dotenv";
 import MongoDbConfigurationSetup from "./db/server.js";
 import usersController from "./controllers/users.controller.js";
 import ordersController from "./controllers/orders.controller.js";
+import swaggerUI from "swagger-ui-express";
+import swaggerDocument from "./docs/swagger.json" assert { type: "json" };
 
 async function startupEnvironment() {
   //Environment variables configuration
@@ -14,6 +16,9 @@ async function startupEnvironment() {
 
   //Middlewares
   app.use(express.json());
+
+  app.use("/api-docs", swaggerUI.serve, swaggerUI.setup(swaggerDocument));
+
   app.use("/api/users", usersController);
   app.use("/api/orders", ordersController);
 
