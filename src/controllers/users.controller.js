@@ -6,6 +6,7 @@ import {
   listUsers,
   updateUser,
 } from "../services/users.services.js";
+import { listOrders } from "../services/orders.services.js";
 
 const router = Router();
 
@@ -44,7 +45,18 @@ router.put("/:id", async (req, res) => {
 });
 
 router.delete("/:id", async (req, res) => {
-  await deleteUser(req.params.id);
+  const userId = req.params.id;
+  const hasAnyOrderWithThisUser = (await listOrders()).some(
+    (x) => x.user_id == userId
+  );
+
+  if (hasAnyOrderWithThisUser)
+    res.status(400).json({
+      status: "fail",
+      errorMessage: "This user has one or more orders.",
+    });
+
+  await deleteUser(userId);
   res.send();
 });
 
