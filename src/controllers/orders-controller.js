@@ -1,11 +1,13 @@
-import { Router } from "express";
-import {
+"use strict";
+
+const { Router } = require("express");
+const {
   createOrder,
   listOrders,
   deleteOrder,
   updateOrder,
   getOrderById,
-} from "../services/orders.services.js";
+} = require("../services/orders.services.js");
 
 const router = Router();
 
@@ -48,4 +50,4 @@ router.delete("/:id", async (req, res) => {
   res.send();
 });
 
-export default router;
+module.exports = router;

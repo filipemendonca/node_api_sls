@@ -1,22 +1,26 @@
-import { Router } from "express";
-import {
+"use strict";
+const { Router } = require("express");
+const {
   createUser,
   deleteUser,
   getUserById,
   listUsers,
   updateUser,
-} from "../services/users.services.js";
-import { listOrders } from "../services/orders.services.js";
+} = require("../services/users.services.js");
 
 const router = Router();
 
 router.get("/", async (req, res) => {
-  const users = await listUsers();
-  if (!users)
-    res
-      .status(404)
-      .json({ status: "fail", errorMessage: "No data available." });
-  res.json(users);
+  try {
+    const users = await listUsers();
+    if (!users)
+      res
+        .status(404)
+        .json({ status: "fail", errorMessage: "No data available." });
+    res.json(users);
+  } catch (err) {
+    console.log(err);
+  }
 });
 
 router.get("/:id", async (req, res) => {
@@ -60,4 +64,4 @@ router.delete("/:id", async (req, res) => {
   res.send();
 });
 
-export default router;
+module.exports = router;

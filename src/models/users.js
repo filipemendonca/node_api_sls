@@ -1,5 +1,7 @@
-import mongoose from "mongoose";
-import validator from "validator";
+// import mongoose from "mongoose";
+// import validator from "validator";
+const mongoose = require("mongoose");
+const validator = require("validator");
 
 const userSchema = mongoose.Schema({
   name: { type: String, required: [true, "Name is a required field."] },
@@ -11,4 +13,6 @@ const userSchema = mongoose.Schema({
   },
 });
 
-export default mongoose.models.Users || mongoose.model("Users", userSchema);
+// export default mongoose.models.Users || mongoose.model("Users", userSchema);
+
+module.exports = mongoose.models.Users || mongoose.model("Users", userSchema);

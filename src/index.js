@@ -1,37 +1,35 @@
-import express from "express";
-import { configDotenv } from "dotenv";
-import MongoDbConfigurationSetup from "./db/server.js";
-import usersController from "./controllers/users.controller.js";
-import ordersController from "./controllers/orders.controller.js";
-import swaggerUI from "swagger-ui-express";
-import swaggerDocument from "./docs/swagger.json" assert { type: "json" };
+const express = require("express");
+const { configDotenv } = require("dotenv");
+const MongoDbConfigurationSetup = require("./db/server.js");
+const usersController = require("./controllers/users-controller.js");
+const ordersController = require("./controllers/orders-controller.js");
+const swaggerUI = require("swagger-ui-express");
+const swaggerDocument = require("./docs/swagger.json");
 
-async function startupEnvironment() {
-  //Environment variables configuration
-  configDotenv();
+//Environment variables configuration
+configDotenv();
 
-  //Starting express process and get port from .env file.
-  const app = express();
-  const port = process.env.APPLICATION_PORT;
+//Starting express process and get port from .env file.
+const app = express();
+const port = process.env.APPLICATION_PORT;
 
-  //Middlewares
-  app.use(express.json());
+//Middlewares
+app.use(express.json());
 
-  app.use("/api-docs", swaggerUI.serve, swaggerUI.setup(swaggerDocument));
+app.use("/api-docs", swaggerUI.serve, swaggerUI.setup(swaggerDocument));
 
-  app.use("/api/users", usersController);
-  app.use("/api/orders", ordersController);
+app.use("/api/users", usersController);
+app.use("/api/orders", ordersController);
 
-  //Starting route
-  app.get("/", (req, res) => {
-    res.send("NodeJS Serveless API with MongoDB");
-  });
+//Starting route
+app.get("/", (req, res) => {
+  res.send("NodeJS Serveless API with MongoDB");
+});
 
-  //MongoDB Config
-  await MongoDbConfigurationSetup(process.env.MONGODB_BASE_URL);
+//MongoDB Config
+MongoDbConfigurationSetup(process.env.MONGODB_BASE_URL);
 
-  //Server listening
-  app.listen(port, () => console.log("Server listening to", port));
-}
+//Server listening
+app.listen(port, () => console.log("Server listening to", port));
 
-startupEnvironment();
+module.exports = app;

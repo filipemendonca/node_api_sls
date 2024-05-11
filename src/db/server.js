@@ -1,7 +1,10 @@
-import mongoose from "mongoose";
+// import mongoose from "mongoose";
+const mongoose = require("mongoose");
 
-export default async function MongoDbConfigurationSetup(connectionString) {
+async function MongoDbConfigurationSetup(connectionString) {
   if (!global.mongoose) {
     global.mongoose = await mongoose.connect(connectionString);
   }
 }
+
+module.exports = MongoDbConfigurationSetup;

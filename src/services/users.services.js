@@ -1,12 +1,17 @@
-import UserSchema from "../models/users.js";
+// import UserSchema from "../models/users.js";
+const UserSchema = require("../models/users.js");
 
-export const listUsers = async () => await UserSchema.find();
-
-export const getUserById = async (id) => await UserSchema.findById(id);
-
-export const createUser = async (user) => await UserSchema.create(user);
-
-export const updateUser = async (id, user) =>
+const listUsers = async () => await UserSchema.find();
+const getUserById = async (id) => await UserSchema.findById(id);
+const createUser = async (user) => await UserSchema.create(user);
+const updateUser = async (id, user) =>
   await UserSchema.findByIdAndUpdate(id, user);
+const deleteUser = async (id) => await UserSchema.findOneAndDelete(id);
 
-export const deleteUser = async (id) => await UserSchema.findOneAndDelete(id);
+module.exports = {
+  listUsers,
+  getUserById,
+  createUser,
+  updateUser,
+  deleteUser,
+};

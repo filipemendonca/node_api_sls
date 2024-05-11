@@ -1,11 +1,7 @@
-import mongoose from "mongoose";
-import {
-  createUser,
-  deleteUser,
-  getUserById,
-  listUsers,
-  updateUser,
-} from "../services/users.services.js";
+// import mongoose from "mongoose";
+// import { getUserById } from "../services/users.services.js";
+const mongoose = require("mongoose");
+const { getUserById } = require("../services/users.services.js");
 
 const ordersSchema = mongoose.Schema({
   description: { type: String, required: true },
@@ -22,4 +18,7 @@ const ordersSchema = mongoose.Schema({
   },
 });
 
-export default mongoose.models.Orders || mongoose.model("Orders", ordersSchema);
+// export default mongoose.models.Orders || mongoose.model("Orders", ordersSchema);
+
+module.exports =
+  mongoose.models.Orders || mongoose.model("Orders", ordersSchema);
