@@ -3,6 +3,7 @@ const { configDotenv } = require("dotenv");
 const MongoDbConfigurationSetup = require("./db/server.js");
 const usersController = require("./controllers/users-controller.js");
 const ordersController = require("./controllers/orders-controller.js");
+const lambdaRouter = require("./router/router.js");
 const swaggerUI = require("swagger-ui-express");
 const swaggerDocument = require("./docs/swagger.json");
 
@@ -20,6 +21,9 @@ app.use("/api-docs", swaggerUI.serve, swaggerUI.setup(swaggerDocument));
 
 app.use("/api/users", usersController);
 app.use("/api/orders", ordersController);
+
+//Lambda controller
+app.use("/api/lambda", lambdaRouter);
 
 //Starting route
 app.get("/", (req, res) => {
